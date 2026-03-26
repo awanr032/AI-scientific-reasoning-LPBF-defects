@@ -1,73 +1,91 @@
-# AI System for Evidence-Grounded Defect Analysis in LPBF (Ti-6Al-4V)
+# AI System for Defect Analysis in LPBF (Ti-6Al-4V)
 
 ## Overview
-This project presents an early-stage prototype of an AI system for analysing defect formation in Laser Powder Bed Fusion (LPBF) of Ti-6Al-4V.
+This repository contains an early-stage prototype of an AI system for analysing defect formation in Laser Powder Bed Fusion (LPBF), with a focus on Ti-6Al-4V.
 
-The system extracts, structures, and reasons over scientific literature to support engineering understanding of how process parameters influence defect formation.
-
----
-
-## Problem
-While large language models and search tools can retrieve and summarise scientific text, they do not explicitly capture relationships between process parameters, defect mechanisms, and material behaviour. They also do not connect evidence across multiple studies in a way that supports engineering reasoning.
-
-As a result, engineers still rely heavily on manual interpretation to understand how processing conditions lead to specific defects.
+The goal of this work is to move beyond simple retrieval and build a system that can extract, organise, and reason over scientific knowledge to support understanding of how process parameters influence defect formation.
 
 ---
 
-## Solution
-This project develops an evidence-grounded AI system that:
+## Motivation
+Understanding defect formation in additive manufacturing typically requires manually reviewing and comparing multiple research papers. While existing tools can retrieve and summarise text, they do not explicitly capture relationships between process parameters, mechanisms, and defects, nor do they connect evidence across studies in a structured way.
 
-- Extracts entities and relationships from scientific literature  
-- Builds a knowledge graph linking process parameters, mechanisms, and defects  
-- Combines graph-based and semantic retrieval with large language models  
-- Classifies scientific questions (e.g., explanation, comparison)  
-- Generates structured, evidence-based answers grounded in retrieved literature  
+This project is an attempt to bridge that gap by combining knowledge extraction, graph-based retrieval, and structured reasoning.
 
 ---
 
-## System Pipeline
+## What the system does
+At a high level, the system:
 
-1. Literature processing and text chunking  
-2. Entity and relation extraction  
-3. Knowledge graph construction  
-4. Hybrid retrieval (graph + semantic search)  
-5. Question classification and orchestration  
-6. Evidence aggregation and answer generation  
+- Processes scientific literature related to LPBF  
+- Extracts entities such as process parameters, defects, and mechanisms  
+- Builds a knowledge graph linking these concepts  
+- Retrieves relevant evidence using both graph structure and semantic similarity  
+- Uses a language model to generate answers grounded in retrieved evidence  
+
+In addition, an agent-based pipeline is used to:
+- classify the type of question  
+- aggregate evidence across chunks  
+- identify dominant defects, parameters, and mechanisms  
+- discover graph paths between relevant concepts  
+- generate a structured report rather than only free-text output  
 
 ---
 
-## Example Query
+## System pipeline
+The core pipeline consists of:
 
+1. Data loading and preprocessing (not included in this repo)  
+2. Semantic indexing of text chunks  
+3. Query normalization  
+4. Graph-based retrieval  
+5. Evidence aggregation  
+6. Question classification  
+7. Graph path discovery  
+8. Answer generation using a language model  
+9. Structured report generation  
+
+---
+
+## Example query
 Why does high laser power lead to keyhole porosity in LPBF?
 
 ---
 
-## Example Output
+## Example output
 
-**Question type:** Explanation  
+Question type: Explanation  
 
-**Matched graph nodes:**  
-- laser power  
-- keyhole  
-
-**Top defect signals:**  
+Top defects:
 - porosity  
 - keyhole  
-- lack of fusion  
 
-**Top process parameters:**  
+Top parameters:
 - laser power  
 - scan speed  
 
-**Detected mechanism:**  
+Mechanism:
 - keyhole instability  
 
-**Graph path:**  
+Graph path:
 laser power → keyhole  
 
-**Generated answer:**  
-High laser power in LPBF can lead to keyhole porosity because it creates a deep melt pool and unstable vapour cavity dynamics. Collapse of the keyhole can trap gas and form pores. The retrieved evidence also indicates that porosity increases with increasing laser power and decreasing scan speed.
+Answer:
+High laser power can create a deeper melt pool and unstable vapour cavity. When the keyhole becomes unstable or collapses, gas can get trapped, forming pores. The retrieved evidence also suggests that porosity tends to increase with higher laser power and lower scan speed.
 
 ---
 
-## Project Structure
+## Evaluation
+A small benchmark of domain-specific questions is used to evaluate how well the system captures relationships between process parameters and defects.
+
+The evaluation includes:
+- retrieval accuracy  
+- defect label precision and recall  
+- parameter identification accuracy  
+- response latency  
+
+The results show that the system can reliably identify dominant defect signals and relevant parameters across different types of questions.
+
+---
+
+## Project structure
