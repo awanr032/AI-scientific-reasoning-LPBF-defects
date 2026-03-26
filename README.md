@@ -88,4 +88,16 @@ The results show that the system can reliably identify dominant defect signals a
 
 ---
 
-## Project structure
+##  structure
+## Repository Structure
+
+- AI_Defect_Reasoning_LPBF.ipynb  
+  Main notebook implementing the Graph RAG pipeline for defect reasoning.
+
+- sample_data/  
+  Contains small example data for demonstration:
+  - sample_raw_data.pdf → Example research paper input  
+  - sample_cleaned_data.docx → Preprocessed/cleaned text  
+  - sample_chunks.json → Extracted entities and relationships in JSON format  
+
+
