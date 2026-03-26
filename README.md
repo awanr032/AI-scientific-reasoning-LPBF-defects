@@ -88,7 +88,7 @@ The results show that the system can reliably identify dominant defect signals a
 
 ---
 
-##  structure
+
 ## Repository Structure
 
 - AI_Defect_Reasoning_LPBF.ipynb  
