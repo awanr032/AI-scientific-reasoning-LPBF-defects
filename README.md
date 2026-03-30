@@ -87,7 +87,8 @@ The evaluation includes:
 The results show that the system can reliably identify dominant defect signals and relevant parameters across different types of questions.
 
 ---
-
+## How to run this file
+- The data has been processed as json chunks. Upload the file"Revised_rag_chunks(1).json" file on google colab or jupyter notebook.
 
 ## Repository Structure
 
