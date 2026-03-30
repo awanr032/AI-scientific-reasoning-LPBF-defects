@@ -1,0 +1,30 @@
+# Core
+numpy>=1.23
+pandas>=1.5
+
+# Retrieval
+faiss-cpu>=1.7.4
+
+# Embeddings
+sentence-transformers>=2.2.2
+torch>=2.0
+
+# Graph
+networkx>=3.0
+
+# ML / utilities
+scikit-learn>=1.2
+tqdm>=4.65
+
+# Visualization (optional but safe)
+matplotlib>=3.7
+
+# API / HTTP
+requests>=2.28
+
+# Notebook environment
+jupyterlab>=3.6
+ipywidgets>=8.0
+
+# Optional (if you use JSON handling heavily)
+ujson>=5.8
