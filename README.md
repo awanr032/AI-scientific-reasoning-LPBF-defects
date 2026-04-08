@@ -99,6 +99,9 @@ The results show that the system can reliably identify dominant defect signals a
   Contains small example data for demonstration:
   - sample_raw_data.pdf → Example research paper input  
   - sample_cleaned_data.docx → Preprocessed/cleaned text  
-  - sample_chunks.json → Extracted entities and relationships in JSON format  
+  - sample_chunks.json → Extracted entities and relationships in JSON format
+ 
+  ## If you use this repository in your research, please cite the following article:If you use this repository in your research, please cite the following article:
+  Muhammad et al.   Towards Agentic Defect Reasoning: A Graph-Assisted Retrieval Framework for Laser Powder Bed Fusion                             https://arxiv.org/html/2604.04208v1    
 
 
