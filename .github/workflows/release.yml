@@ -1,0 +1,71 @@
+name: Release
+
+# Triggered by pushing a semver tag, e.g. `git tag v0.1.0 && git push origin v0.1.0`.
+# See CONTRIBUTING.md for the full release checklist (bump pyproject.toml
+# version + CHANGELOG.md *before* tagging).
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write   # to create the GitHub Release
+  packages: write   # to push the image to GHCR
+
+jobs:
+  build-python-package:
+    name: Build sdist/wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install build
+      - run: python -m build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: dist/*
+
+  build-and-push-image:
+    name: Build + push Docker image (ghcr.io)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+            ghcr.io/${{ github.repository }}:latest
+
+  github-release:
+    name: Publish GitHub Release
+    needs: [build-python-package, build-and-push-image]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-dist
+          path: dist
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          body: |
+            See CHANGELOG.md for details.
+
+            Docker image: `ghcr.io/${{ github.repository }}:${{ github.ref_name }}`

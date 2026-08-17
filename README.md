@@ -87,21 +87,62 @@ The evaluation includes:
 The results show that the system can reliably identify dominant defect signals and relevant parameters across different types of questions.
 
 ---
-## How to run this file
-- The data has been processed as json chunks. Upload the file"Revised_rag_chunks(1).json" file on google colab or jupyter notebook.
+## Installation
+
+```bash
+git clone <repo-url>
+cd AI-scientific-reasoning-LPBF-defects
+pip install -e ".[notebook,dev]"
+```
+
+See `CONTRIBUTING.md` for the full dev setup, versioning conventions, and
+release process.
+
+## How to run this
+
+- **Notebook / Colab**: open `notebooks/AI_Defect_Reasoning_LPBF.ipynb`. It
+  imports the `lpbf_defect_reasoning` package and runs it end-to-end against
+  `data/sample/graph_rag_chunks.json`.
+- **CLI**:
+  ```bash
+  lpbf-defect-reasoning \
+    --chunks data/sample/graph_rag_chunks.json \
+    --question "Why does high laser power lead to keyhole porosity in LPBF?"
+  ```
+- **Docker**: `docker build -t lpbf-defect-reasoning .` then
+  `docker run --rm lpbf-defect-reasoning --chunks data/sample/graph_rag_chunks.json --question "..."`.
 
 ## Repository Structure
 
-- AI_Defect_Reasoning_LPBF.ipynb  
-  Main notebook implementing the Graph RAG pipeline for defect reasoning.
+- `src/lpbf_defect_reasoning/`
+  The installable package implementing the Graph-RAG pipeline: chunk
+  loading (`io.py`), knowledge graph construction (`graph.py`), query
+  normalization (`text.py`), graph-guided semantic retrieval
+  (`indexing.py`, `retrieval.py`), grounded answer generation
+  (`generation.py`), question classification (`classification.py`), graph
+  path discovery (`paths.py`), evidence aggregation/reporting
+  (`reporting.py`), the end-to-end `GraphRagPipeline` (`pipeline.py`),
+  benchmark evaluation (`evaluation.py`), pinned model config
+  (`config.py`), and a CLI (`cli.py`).
 
-- sample_data/  
-  Contains small example data for demonstration:
-  - sample_raw_data.pdf → Example research paper input  
-  - sample_cleaned_data.docx → Preprocessed/cleaned text  
-  - sample_chunks.json → Extracted entities and relationships in JSON format
- 
-  ## If you use this repository in your research, please cite the following article:If you use this repository in your research, please cite the following article:
-  Muhammad et al.   Towards Agentic Defect Reasoning: A Graph-Assisted Retrieval Framework for Laser Powder Bed Fusion                             https://arxiv.org/html/2604.04208v1    
+- `notebooks/AI_Defect_Reasoning_LPBF.ipynb`
+  Thin demo notebook that drives the package above against the sample data.
 
+- `data/sample/`
+  Small example data for demonstration:
+  - `sample_raw_data.pdf` → Example research paper input
+  - `sample_cleaned_data.docx` → Preprocessed/cleaned text
+  - `sample_chunks.json`, `graph_rag_chunks.json` → Extracted entities and
+    relationships in JSON format
+
+- `tests/`
+  Unit tests for every module in `src/lpbf_defect_reasoning/`, run in CI on
+  every push/PR (`.github/workflows/ci.yml`).
+
+- `Dockerfile`, `.github/workflows/release.yml`
+  Reproducible runtime image and the tag-triggered release pipeline (see
+  `CONTRIBUTING.md` for the release checklist).
+
+## If you use this repository in your research, please cite the following article:
+Muhammad et al. Towards Agentic Defect Reasoning: A Graph-Assisted Retrieval Framework for Laser Powder Bed Fusion. https://arxiv.org/html/2604.04208v1
 
