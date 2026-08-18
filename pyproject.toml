@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lpbf-defect-reasoning"
+version = "0.1.0"
+description = "Graph-RAG system for reasoning about defect formation in Laser Powder Bed Fusion (Ti-6Al-4V)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Muhammad et al." }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.23,<3",
+    "pandas>=1.5,<3",
+    "networkx>=3.0,<4",
+    "faiss-cpu>=1.7.4,<2",
+    "sentence-transformers>=2.2.2,<4",
+    "transformers>=4.38,<5",
+    "torch>=2.0,<3",
+    "scikit-learn>=1.2,<2",
+    "tqdm>=4.65,<5",
+    "requests>=2.28,<3",
+]
+
+[project.optional-dependencies]
+notebook = ["jupyterlab>=3.6,<5", "ipywidgets>=8.0,<9", "matplotlib>=3.7,<4"]
+dev = ["pytest>=8.0,<9", "pytest-cov>=5.0,<6", "ruff>=0.6,<1", "build>=1.2,<2"]
+
+[project.scripts]
+lpbf-defect-reasoning = "lpbf_defect_reasoning.cli:main"
+
+[project.urls]
+Repository = "https://github.com/awanr032/ai-scientific-reasoning-lpbf-defects"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

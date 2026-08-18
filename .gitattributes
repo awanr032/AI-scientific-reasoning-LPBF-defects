@@ -1,0 +1,8 @@
+# Sample PDF/DOCX are committed as regular blobs by default (small enough:
+# < 6 MB combined). If this repo's data grows, Git LFS is the recommended
+# path for large/binary files - uncomment the lines below and run
+# `git lfs track '*.pdf' '*.docx'` (see CONTRIBUTING.md). Not enabled by
+# default because it requires the hosting/CI credentials used for pushes to
+# support the Git LFS batch API, which not every git host/integration does.
+# *.pdf filter=lfs diff=lfs merge=lfs -text
+# *.docx filter=lfs diff=lfs merge=lfs -text
