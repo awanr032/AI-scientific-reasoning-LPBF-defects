@@ -7,7 +7,7 @@ report back as JSON.
 """
 
 from __future__ import annotations
-
+import os
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -23,7 +23,7 @@ from .pipeline import GraphRagPipeline
 # Which chunk file this service reasons over. Hardcoded to the sample data
 # for now to keep this first version simple - in a real deployment this
 # would come from an environment variable instead.
-CHUNKS_PATH = "data/sample/graph_rag_chunks.json"
+CHUNKS_PATH = os.environ.get("CHUNKS_PATH", "data/sample/graph_rag_chunks.json")
 
 # Off by default: loading the generation LLM (Mistral-7B) takes real time
 # and several GB of RAM/VRAM. Keep this False while you're first getting the

@@ -3,15 +3,16 @@
 # Build:
 #   docker build -t lpbf-defect-reasoning .
 #
-# Run against the bundled sample data (mounts nothing extra needed):
-#   docker run --rm lpbf-defect-reasoning \
-#     --chunks data/sample/graph_rag_chunks.json \
-#     --question "Why does high laser power lead to keyhole porosity in LPBF?" \
-#     --no-generate
+# Run as a web API (the default):
+#   docker run --rm -p 8000:8000 lpbf-defect-reasoning
+#   Then open http://localhost:8000/docs
 #
-# Running with generation enabled (drops --no-generate) downloads the pinned
-# Mistral-7B-Instruct model at runtime and needs several GB of RAM/VRAM - see
-# src/lpbf_defect_reasoning/config.py for the exact pinned model revisions.
+# Run the CLI instead (overrides the default command):
+#   docker run --rm lpbf-defect-reasoning \
+#     python -m lpbf_defect_reasoning.cli \
+#     --chunks data/sample/graph_rag_chunks.json \
+#     --question "Which process parameters influence porosity formation?" \
+#     --no-generate
 
 FROM python:3.11-slim AS base
 
@@ -21,13 +22,13 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Install runtime dependencies first for better layer caching.
 COPY pyproject.toml README.md ./
 COPY src ./src
 RUN pip install --upgrade pip \
-    && pip install .
+    && pip install ".[api]"
 
 COPY data/sample ./data/sample
 
-ENTRYPOINT ["python", "-m", "lpbf_defect_reasoning.cli"]
-CMD ["--help"]
+EXPOSE 8000
+
+CMD uvicorn lpbf_defect_reasoning.api:app --host 0.0.0.0 --port ${PORT:-8000}
